@@ -20,4 +20,6 @@ Demonstrar habilidades de estruturação de interface, responsividade, estiliza�
 Basta abrir o arquivo `index.html` no navegador.
 
 ## Autor
-Seu Nome
+André Luiz Mariano Machado
+
+https://euandrexz.github.io/login-page-portfolio/ 
