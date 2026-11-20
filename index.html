@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Portfólio Front-end</title>
+  <style>
+    :root {
+      --bg-1: #eef4ff;
+      --bg-2: #f8fbff;
+      --card: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(255, 255, 255, 0.7);
+      --text: #172033;
+      --muted: #667085;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: rgba(37, 99, 235, 0.12);
+      --border: #d9e2f0;
+      --error: #dc2626;
+      --success: #16a34a;
+      --shadow: 0 20px 50px rgba(31, 41, 55, 0.12);
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --input-h: 52px;
+      --transition: 0.22s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #dbeafe 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #e0e7ff 0%, transparent 35%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero {
+      padding: 48px;
+      background:
+        linear-gradient(160deg, rgba(37, 99, 235, 0.95), rgba(99, 102, 241, 0.9));
+      color: white;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 620px;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      filter: blur(2px);
+    }
+
+    .hero::before {
+      width: 220px;
+      height: 220px;
+      top: -60px;
+      right: -40px;
+    }
+
+    .hero::after {
+      width: 160px;
+      height: 160px;
+      bottom: 40px;
+      left: -40px;
+    }
+
+    .brand {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: bold;
+      font-size: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255,255,255,0.22);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 14px;
+      font-size: 42px;
+      line-height: 1.08;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .hero-points {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      margin-top: 32px;
+      max-width: 420px;
+    }
+
+    .hero-point {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.95);
+      font-size: 14px;
+    }
+
+    .point-icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+    }
+
+    .login-panel {
+      padding: 40px;
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .login-card h2 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .login-card .subtitle {
+      margin: 0 0 28px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input {
+      width: 100%;
+      height: var(--input-h);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.9);
+      padding: 0 16px;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .input::placeholder {
+      color: #94a3b8;
+    }
+
+    .input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-soft);
+      background: #fff;
+    }
+
+    .input.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.08);
+    }
+
+    .input.success {
+      border-color: var(--success);
+      box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.08);
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      height: 36px;
+      min-width: 36px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      color: #64748b;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+
+    .toggle-password:hover {
+      background: rgba(148, 163, 184, 0.12);
+    }
+
+    .error-text {
+      min-height: 16px;
+      font-size: 13px;
+      color: var(--error);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 14px;
+      user-select: none;
+    }
+
+    .checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .link {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .btn {
+      height: 52px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), #3b82f6);
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(37, 99, 235, 0.26);
+      background: linear-gradient(135deg, var(--primary-hover), #2563eb);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .message {
+      min-height: 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .message.success {
+      color: var(--success);
+    }
+
+    .message.error {
+      color: var(--error);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      margin: 4px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .socials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .social-btn {
+      height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.85);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: bold;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      border-color: #b9c7db;
+      background: #fff;
+      transform: translateY(-1px);
+    }
+
+    .footer-text {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .badge {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 12px;
+      color: #7b8798;
+    }
+
+    @media (max-width: 900px) {
+      .wrapper {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 32px;
+        gap: 28px;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .login-panel {
+        padding: 28px 22px 32px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 14px;
+      }
+
+      .hero,
+      .login-panel {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .login-card h2 {
+        font-size: 26px;
+      }
+
+      .socials {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrapper">
+    <section class="hero" aria-label="Apresentação">
+      <div class="brand">
+        <div class="brand-mark">◈</div>
+        <span>MeuLogin UI</span>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-tag">Projeto front-end para portfólio</div>
+        <h1>Uma página de login elegante, responsiva e bem organizada.</h1>
+        <p>
+          Ideal para mostrar domínio de estrutura HTML, estilo com CSS moderno,
+          validação com JavaScript e atenção aos detalhes visuais.
+        </p>
+      </div>
+
+      <div class="hero-points">
+        <div class="hero-point">
+          <svg class="point-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.18)"/>
+            <path d="M7 12.2 10.1 15.2 17 8.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Código limpo e fácil de entender
+        </div>
+
+        <div class="hero-point">
+          <svg class="point-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.18)"/>
+            <path d="M7 12.2 10.1 15.2 17 8.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Layout responsivo para desktop e mobile
+        </div>
+
+        <div class="hero-point">
+          <svg class="point-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.18)"/>
+            <path d="M7 12.2 10.1 15.2 17 8.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Interações simples para demonstrar JavaScript
+        </div>
+      </div>
+    </section>
+
+    <section class="login-panel" aria-label="Formulário de login">
+      <div class="login-card">
+        <h2>Entrar</h2>
+        <p class="subtitle">
+          Acesse sua conta com email e senha. Este projeto é apenas front-end para exibição em portfólio.
+        </p>
+
+        <form id="loginForm" class="form" novalidate>
+          <div class="field">
+            <label for="email">Email</label>
+            <div class="input-wrap">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                class="input"
+                placeholder="seuemail@exemplo.com"
+                autocomplete="email"
+              />
+            </div>
+            <div class="error-text" id="emailError"></div>
+          </div>
+
+          <div class="field">
+            <label for="senha">Senha</label>
+            <div class="input-wrap">
+              <input
+                id="senha"
+                name="senha"
+                type="password"
+                class="input"
+                placeholder="Digite sua senha"
+                autocomplete="current-password"
+              />
+              <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar ou ocultar senha">
+                <svg id="eyeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" stroke="currentColor" stroke-width="1.8"/>
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+              </button>
+            </div>
+            <div class="error-text" id="senhaError"></div>
+          </div>
+
+          <div class="row">
+            <label class="checkbox">
+              <input type="checkbox" id="remember" />
+              <span>Lembrar de mim</span>
+            </label>
+
+            <a href="#" class="link">Esqueci minha senha</a>
+          </div>
+
+          <button type="submit" class="btn">Entrar na conta</button>
+
+          <div class="message" id="formMessage"></div>
+
+          <div class="divider">ou continue com</div>
+
+          <div class="socials">
+            <button type="button" class="social-btn">Google</button>
+            <button type="button" class="social-btn">GitHub</button>
+          </div>
+
+          <div class="footer-text">
+            Não tem conta? <a href="#" class="link">Criar cadastro</a>
+          </div>
+
+          <div class="badge">
+            Projeto demonstrativo em HTML, CSS e JavaScript puro.
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const email = document.getElementById("email");
+    const senha = document.getElementById("senha");
+    const emailError = document.getElementById("emailError");
+    const senhaError = document.getElementById("senhaError");
+    const formMessage = document.getElementById("formMessage");
+    const togglePassword = document.getElementById("togglePassword");
+
+    function validarEmail(valor) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor);
+    }
+
+    function limparEstado() {
+      email.classList.remove("error", "success");
+      senha.classList.remove("error", "success");
+      emailError.textContent = "";
+      senhaError.textContent = "";
+      formMessage.textContent = "";
+      formMessage.className = "message";
+    }
+
+    function validarFormulario() {
+      limparEstado();
+      let valido = true;
+
+      if (!email.value.trim()) {
+        emailError.textContent = "Informe seu email.";
+        email.classList.add("error");
+        valido = false;
+      } else if (!validarEmail(email.value.trim())) {
+        emailError.textContent = "Digite um email válido.";
+        email.classList.add("error");
+        valido = false;
+      } else {
+        email.classList.add("success");
+      }
+
+      if (!senha.value.trim()) {
+        senhaError.textContent = "Informe sua senha.";
+        senha.classList.add("error");
+        valido = false;
+      } else if (senha.value.trim().length < 6) {
+        senhaError.textContent = "A senha deve ter pelo menos 6 caracteres.";
+        senha.classList.add("error");
+        valido = false;
+      } else {
+        senha.classList.add("success");
+      }
+
+      return valido;
+    }
+
+    email.addEventListener("blur", () => {
+      if (!email.value.trim()) return;
+      if (validarEmail(email.value.trim())) {
+        email.classList.remove("error");
+        email.classList.add("success");
+        emailError.textContent = "";
+      }
+    });
+
+    senha.addEventListener("blur", () => {
+      if (!senha.value.trim()) return;
+      if (senha.value.trim().length >= 6) {
+        senha.classList.remove("error");
+        senha.classList.add("success");
+        senhaError.textContent = "";
+      }
+    });
+
+    togglePassword.addEventListener("click", () => {
+      const isPassword = senha.type === "password";
+      senha.type = isPassword ? "text" : "password";
+      togglePassword.setAttribute(
+        "aria-label",
+        isPassword ? "Ocultar senha" : "Mostrar ou ocultar senha"
+      );
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const valido = validarFormulario();
+
+      if (!valido) {
+        formMessage.textContent = "Corrija os campos destacados.";
+        formMessage.classList.add("error");
+        return;
+      }
+
+      formMessage.textContent = "Login enviado com sucesso.";
+      formMessage.classList.add("success");
+
+      // Integração futura:
+      // fetch("/api/login", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify({
+      //     email: email.value.trim(),
+      //     senha: senha.value
+      //   })
+      // });
+
+      setTimeout(() => {
+        form.reset();
+        limparEstado();
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
